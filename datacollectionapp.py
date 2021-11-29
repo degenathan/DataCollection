@@ -45,82 +45,84 @@ def search(a,b,c):
         x = x[1]
         var = '?search_context=' + str(x)
         var = var + '&q=' + str(category_name)
+        print(var)
         return var
     
     else:
         print("City Not Found.")
 
 
-def mainprogram():
+def mainprogram(a,b,c):
     
     
     stoprg = 0
     
-    while stoprg == 0:
-        city_domain = str(search())
-    
-        http = urllib3.PoolManager()
-    
-        #?domains=data.austintexas.gov'
-    
-        request_site = 'https://api.us.socrata.com/api/catalog/v1'+ city_domain
-        print(request_site)
-        
-        request = http.request('GET',request_site)
-    
-        #response_body = urlopen(request).read()
-        data = json.loads(request.data)
-        #print(data)
-        while True: 
-            try:
-                results_df = pd.json_normalize(data['results'])
-                break
-            except KeyError:
-                print("No result found.")
-                print()
-                main()
-                
-        #DataFrame.from_records(str(request.data))
-        
-        results_df['Index'] = range(1,len(results_df)+1)
-        #print(results_df)
-        results_df.set_index('Index')
-        #['resource.name']
-        a = pd.DataFrame(data, columns = ['Index', 'Name'], index = None)
-        a['Index'] = results_df['Index']
-        a['Name'] = results_df['resource.name']
-        print(results_df[['Index','resource.name']].to_string(index=False))
-        #results_df.to_csv('results_test.csv')
-        print()
-        print("Select datasets seperated by commas", end = "")
-        num_select = input("or type NA for none: ")
-        if num_select != 'NA':
-            num_select = num_select.split(",")
-            for i in num_select:
-                i = int(i)-1  
-                #results_df.loc[i]
-                x = results_df.iloc[i]
-                z = x['resource.id']
-                y = x['metadata.domain']
-                #print(z)
-                client = Socrata(y, None)
-                results = client.get(z)
-                final = pd.DataFrame.from_records(results)
-                
-                #data = json.loads(request.data)
-                #final = pd.json_normalize(data['results'])
-                
-                y = results_df.loc[i]['resource.name'] + '.csv'
-                final.to_csv(y)
-                print("Downloaded", y)  
+    city_domain = str(search(a,b,c))
 
-        ystop = input("Continue with another city/topic? (y/n): ")
-        if ystop == 'n':
-            stoprg += 1
-            exit()
-        
-        
-          
+    http = urllib3.PoolManager()
+
+    #?domains=data.austintexas.gov'
+
+    request_site = 'https://api.us.socrata.com/api/catalog/v1'+ city_domain
+    print(request_site)
+    
+    request = http.request('GET',request_site)
+
+    #response_body = urlopen(request).read()
+    data = json.loads(request.data)
+    #print(data)
+    while True: 
+        try:
+            results_df = pd.json_normalize(data['results'])
+            break
+        except KeyError:
+            print("No result found.")
+            print()
+            main()
+            
+    #DataFrame.from_records(str(request.data))
+    
+    results_df['Index'] = range(1,len(results_df)+1)
+    #print(results_df.head())
+    results_df.set_index('Index')
+    #['resource.name']
+    a = pd.DataFrame(data, columns = ['Index', 'Name'], index = None)
+    a['Index'] = results_df['Index']
+    a['Name'] = results_df['resource.name']
+    a['More Info'] = results_df['permalink']
+    #print(a[['Index','Name']].to_string(index=False))
+    return a
+    #results_df.to_csv('results_test.csv')
+    print()
+    
+    '''
+    #download the datasets process
+    print("Select datasets seperated by commas", end = "")
+    num_select = '1'
+    #input("or type NA for none: ")
+    if num_select != 'NA':
+        num_select = num_select.split(",")
+        for i in num_select:
+            i = int(i)-1  
+            #results_df.loc[i]
+            x = results_df.iloc[i]
+            z = x['resource.id']
+            y = x['metadata.domain']
+            #print(z)
+            client = Socrata(y, None)
+            results = client.get(z)
+            final = pd.DataFrame.from_records(results)
+            
+            #data = json.loads(request.data)
+            #final = pd.json_normalize(data['results'])
+            
+            y = results_df.loc[i]['resource.name'] + '.csv'
+            final.to_csv(y)
+            print("Downloaded", y)  
+    
+     '''   
+def downloaddata(a):
+    print('test')         
     #print(request.data)
     
     '''
