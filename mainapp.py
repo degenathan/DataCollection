@@ -1,6 +1,7 @@
 from os import name
 from flask import Flask, render_template, request, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from flask_wtf import FlaskForm
 from wtforms_sqlalchemy.fields import QuerySelectField
 from wtforms import SelectField 
@@ -14,9 +15,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SECRET_KEY'] = 'SECRET_KEY'
 db = SQLAlchemy(app)
 
-#Creating the SQL database from CSV file if TRUE
+#Creating the SQL database from CSV file if TRUE (Unfinished)
 citycsv = pd.read_csv('city_api_list.csv', index_col=False)
 citycsv = citycsv.drop(citycsv[(citycsv.Working != "Yes")].index)
+
 
 
 
@@ -49,7 +51,6 @@ def index():
         #topic = City.query.filter_by(id=city.topic).first()
         m = folium.Map(location=[30.2672,-97.7431],zoom_start=14)
         m.save('templates/map.html')
-        #here
         returnlist = mainprogram(city.name,form.state.data, request.form['content_topic'])
         
         return render_template('dataresults.html', form = form, city = city.name, state = form.state.data, topic = request.form['content_topic'], tables=[returnlist.to_html(classes='data', index = False, header = True, justify='center', render_links=True)], titles=returnlist.columns.values)
@@ -78,5 +79,13 @@ def city(state):
 
 if __name__ == "__main__":
     #db.create_all()
-    print(citycsv)
+    '''
+    city1 = City(id = 1, state = "CA", name = "Los Angeles")
+    city2 = City(id = 2, state = "TX", name = "Dallas")
+    city3 = City(id = 3, state = "TX", name = "Austin")
+    city4 = City(id = 4, state = "WA", name = "Seattle")
+    city5 = City(id = 5, state = "IL",name = "Chicago")
+    '''
+    db.session.commit()
+    #print(citycsv)
     app.run(debug = True)

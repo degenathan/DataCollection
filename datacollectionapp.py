@@ -1,15 +1,4 @@
 
-"""
-Please run this section of code if missing a python library
-import sys
-!{sys.executable} -m pip install sodapy
-
-import sys
-!{sys.executable} -m pip install pandas
-
-"""
-
-
 #API Key ID
 #9yz7a9cjftdr9qbvdlhz4ii9l
 
@@ -96,7 +85,7 @@ def mainprogram(a,b,c):
     print()
     
     '''
-    #download the datasets process
+    #download the datasets process into a csv (need to move to a function)
     print("Select datasets seperated by commas", end = "")
     num_select = '1'
     #input("or type NA for none: ")
@@ -124,15 +113,5 @@ def mainprogram(a,b,c):
 def downloaddata(a):
     print('test')         
     #print(request.data)
-    
-    '''
-    
-    client = Socrata("https://api.us.socrata.com/api/catalog/v1/domains", None)
-    results = client.get()
-    results_df = pd.DataFrame.from_records(results)
-    
-    topic = input("Topic of interest: ")
-    print(topic)
-    '''
 
 

@@ -1,9 +1,9 @@
 ﻿City,State-Abbr.,API-site,Working
 Austin,TX,data.austintexas.gov,Yes
-Austin,MN,bronx.lehman.cuny.edu,
+Austin,MN,bronx.lehman.cuny.edu,Yes
 Seattle,WA,data.seattle.gov,Yes
 Chicago,IL,data.cityofchicago.org,Yes
-Honolulu,HI,data.honolulu.gov,
+Honolulu,HI,data.honolulu.gov,No
 Montgomery,AL,data.montgomerycountymd.gov,
 Colorado,CO,data.colorado.gov,
 Connecticut,CT,data.ct.gov,
@@ -31,4 +31,6 @@ New York City,NY,data.cityofnewyork.us,
 Cincinnati,OH,data.cincinnati-oh.gov,
 Oklahoma,OK,data.ok.gov,
 Oregon,OR,data.oregon.gov,
-Philadephia,PA,phila.gov/data,
+Philadephia,PA,phila.gov,
+Los Angeles,CA,data.lacity.org,
+Dallas,TX,dallasopendata.com,
